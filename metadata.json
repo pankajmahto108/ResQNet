@@ -1,0 +1,8 @@
+{
+  "name": "ResQNet",
+  "description": "A high-stakes emergency response mobile prototype featuring AI-powered injury triage, real-time hospital discovery, blood availability tracking, and one-tap SOS services.",
+  "requestFramePermissions": [
+    "geolocation",
+    "microphone"
+  ]
+}
