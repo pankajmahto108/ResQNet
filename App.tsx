@@ -42,7 +42,25 @@ import { APP_MODULES, INJURIES, MOCK_HOSPITALS, MOCK_BLOOD, MOCK_HELPLINES } fro
 import { analyzeInjury, TriageResult, findNearbyHospitals, HospitalSearchResponse } from './services/geminiService';
 import { Severity, Hospital, BloodStock, Injury } from './types';
 
-const LOGO_URL = "https://api.screenshotbot.com/render/746401-4470-4946-802c-474c1000672e?width=100&height=100";
+// --- Branding Component ---
+
+const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Outer Waves/Signal - Dark Blue */}
+    <path d="M30 35C30 35 40 25 50 25C60 25 70 35 70 35" stroke="#0D2B45" strokeWidth="6" strokeLinecap="round" />
+    <path d="M35 42C35 42 42.5 35 50 35C57.5 35 65 42 65 42" stroke="#0D2B45" strokeWidth="6" strokeLinecap="round" />
+    
+    {/* Main Shield - Dark Blue Border */}
+    <path d="M28 42V60C28 75 50 85 50 85C50 85 72 75 72 60V42H28Z" fill="#0D2B45" />
+    
+    {/* Inner Shield - Red */}
+    <path d="M35 45V58C35 68 50 76 50 76C50 76 65 68 65 58V45H35Z" fill="#D32F2F" />
+    
+    {/* Letter R - White */}
+    <path d="M44 50H50C53 50 55 51.5 55 54C55 56.5 53 58 50 58H44V50Z" fill="white" />
+    <path d="M44 50V65M44 58H50L56 65" stroke="white" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
 
 // --- Audio Helpers for Live API ---
 
@@ -90,7 +108,7 @@ const Header = ({ title }: { title: string }) => {
         </button>
       </div>
       <div className="flex items-center gap-2 flex-1 min-w-0">
-        <img src={LOGO_URL} alt="ResQNet Logo" className="w-8 h-8 object-contain flex-shrink-0" />
+        <Logo className="w-8 h-8 flex-shrink-0" />
         <h1 className="text-lg font-bold text-gray-900 truncate">{title}</h1>
       </div>
       <div className="flex items-center gap-2">
@@ -141,7 +159,7 @@ const HomeScreen = () => {
           <Activity className="absolute -right-4 -bottom-4 w-32 h-32 text-white/10" />
         </div>
 
-        {/* SOS Button Section with Logo integrated */}
+        {/* SOS Button Section with custom Logo integrated */}
         <div className="flex flex-col items-center justify-center py-12">
           <button 
             onClick={handleSOS}
@@ -150,8 +168,8 @@ const HomeScreen = () => {
             }`}
           >
             <div className="absolute inset-0 rounded-full border-8 border-white/20 animate-ping" style={{ animationDuration: '2s' }}></div>
-            <div className="bg-white p-4 rounded-full mb-3 shadow-inner">
-               <img src={LOGO_URL} alt="Logo" className="w-20 h-20 object-contain" />
+            <div className="bg-white p-5 rounded-full mb-3 shadow-inner">
+               <Logo className="w-24 h-24" />
             </div>
             <span className="text-white font-black text-3xl uppercase tracking-tighter">Emergency</span>
             <span className="text-white/80 font-bold text-xl">SOS</span>
