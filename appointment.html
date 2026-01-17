@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>APPOINTMENT</title>
+  <link rel="stylesheet" href="appointment.css">
+</head>
+<body>
+    <video
+    autoplay
+    loop
+    muted
+    src="templates/video/appo.mp4"
+  ></video>
+  <div id="main">
+    <form name="google-sheet">
+  <section id="form-section">
+    <h2>Patient Information Form</h2>
+
+    <div>
+      <input class="form-input" name="Phone Number" type="text" id="number" placeholder="Phone Number" /><br />
+
+      <input class="form-input" name="Patient Name" type="text" id="name" placeholder="Patient Name" /><br />
+
+      <input class="form-input" name="Age" type="number" id="age" placeholder="Age" /><br />
+
+      <input class="form-input" name="Gender" type="text" id="gender" placeholder="Gender" /><br />
+
+      <input class="form-input" name="Email" type="email" id="email" placeholder="Email" /><br />
+
+      <select name="specialisation" class="form-input" required>
+        <option value="" disabled selected>-- Choose Specialisation --</option>
+        <option value="general_physician">General Physician</option>
+        <option value="cardiologist">Cardiologist (Heart Specialist)</option>
+        <option value="neurologist">Neurologist (Brain & Nerves)</option>
+        <option value="orthopedic">Orthopedic (Bone Specialist)</option>
+        <option value="dermatologist">Dermatologist (Skin Specialist)</option>
+        <option value="gynecologist">Gynecologist (Women Specialist)</option>
+        <option value="pediatrician">Pediatrician (Child Doctor)</option>
+        <option value="ent_specialist">ENT Specialist (Ear, Nose, Throat)</option>
+        <option value="ophthalmologist">Ophthalmologist (Eye Doctor)</option>
+        <option value="dentist">Dentist</option>
+        <option value="psychiatrist">Psychiatrist (Mental Health)</option>
+        <option value="urologist">Urologist (Urine & Kidney)</option>
+        <option value="gastroenterologist">Gastroenterologist (Stomach & Digestive)</option>
+        <option value="pulmonologist">Pulmonologist (Lungs Specialist)</option>
+        <option value="endocrinologist">Endocrinologist (Hormones & Diabetes)</option>
+      </select>
+      <br />
+
+      <textarea class="form-input" id="message" rows="4" placeholder="Message"></textarea><br />
+      <!-- <input type="submit" name="submit" class="submit" > -->
+      <!-- <button id="sendButton">BOOK appointment</button> -->
+        <button type="submit" id="sendButton">BOOK appointment</button>
+
+      <div id="toast">Message Sent!</div>
+    </div>
+    </form>
+  </section>
+</div>
+
+<!-- Script that save data in google sheets -->
+<script>
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyHGjlkE2FmL7hb6IM3UA-DReyIl9qUwpdvyNycoj1pOYpakrkyW2xSkvprvNtRfgDl/exec'
+            const form = document.forms['google-sheet']
+          
+            form.addEventListener('submit', e => {
+              e.preventDefault()
+              fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => alert("Thanks for Contacting us..! We Will Contact You Soon..."))
+                .catch(error => console.error('Error!', error.message))
+            })
+          </script>
+
+
+<!-- SCRIPT 2.0 -->
+<!-- 
+<script>
+    document.getElementById('sendButton').addEventListener('click', function () {
+      const number = document.getElementById('number').value.trim();
+      const name = document.getElementById('name').value.trim();
+      const age = document.getElementById('age').value.trim();
+      const gender = document.getElementById('gender').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+  
+      if (!number || !name || !age || !gender || !email || !message) {
+        alert('Please fill in all fields before submitting.');
+        return;
+      }
+  
+      const chatId = '5441567631'; // replace with your Telegram chat ID
+      const botToken = '7625166641:AAFS9PxA0RitG1G-faGh4gCvVciobPJ3YTo'; // replace with your Telegram bot token
+  
+      const text = `Number: ${number}\nPatient Name: ${name}\nAge: ${age}\nGender: ${gender}\nEmail: ${email}\nMessage: ${message}`;
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage?text=${encodeURIComponent(text)}&chat_id=${chatId}`;
+  
+      fetch(url)
+        .then(response => {
+          if (response.ok) {
+            const toast = document.getElementById('toast');
+            toast.className = 'show';
+            setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 3000);
+  
+            // Clear fields
+            ['number', 'name', 'age', 'gender', 'email', 'message'].forEach(id => {
+              document.getElementById(id).value = '';
+            });
+          } else {
+            alert('There was a problem sending the message.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('There was a problem sending the message.');
+        });
+    });
+  </script> >
+   -->
+  <!-- <script>
+    document.getElementById('sendButton').addEventListener('click', function () {
+      const number = document.getElementById('number').value;
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const gender = document.getElementById('gender').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+
+      const chatId = '5441567631'; // replace with your Telegram chat ID
+      const botToken = '7625166641:AAFS9PxA0RitG1G-faGh4gCvVciobPJ3YTo'; // replace with your Telegram bot token
+
+      const text = `Number: ${number}\nPatient Name: ${name}\nAge: ${age}\nGender: ${gender}\nEmail: ${email}\nMessage: ${message}`;
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage?text=${encodeURIComponent(text)}&chat_id=${chatId}`;
+
+      fetch(url)
+        .then(response => {
+          if (response.ok) {
+            const toast = document.getElementById('toast');
+            toast.className = 'show';
+            setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 3000);
+
+            // Clear fields
+            ['number', 'name', 'age', 'gender', 'email', 'message'].forEach(id => {
+              document.getElementById(id).value = '';
+            });
+          } else {
+            alert('There was a problem sending the message.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('There was a problem sending the message.');
+        });
+    });
+  </script> -->
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Ambulance Request</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: #fff;
+      padding: 30px;
+      width: 350px;
+      border-radius: 16px;
+      box-shadow: 0px 10px 25px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      outline: none;
+      font-size: 15px;
+      background: #fafafa;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #ff3b3b;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #e62e2e;
+    }
+
+    .loc-btn {
+      background: #007bff;
+      margin-top: 8px;
+    }
+
+    .loc-btn:hover {
+      background: #0069d9;
+    }
+
+    small {
+      display: block;
+      margin-top: 8px;
+      color: #555;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>🚑 Emergency Ambulance Request</h2>
+
+  <form id="ambulanceForm">
+
+    <input 
+      type="text" 
+      id="phone" 
+      name="phone" 
+      placeholder="Phone Number" 
+      required 
+    />
+
+    <input 
+      type="text" 
+      id="latitude" 
+      name="latitude" 
+      placeholder="Latitude" 
+      readonly 
+    />
+
+    <input 
+      type="text" 
+      id="longitude" 
+      name="longitude" 
+      placeholder="Longitude" 
+      readonly 
+    />
+
+    <button type="button" class="loc-btn" onclick="getLocation()">📍 Detect My Location</button>
+
+    <button type="submit">Send Ambulance</button>
+
+    <small>Your location is required for emergency dispatch.</small>
+
+  </form>
+</div>
+
+
+<script>
+  const scriptURL = "https://script.google.com/macros/s/AKfycbwjQp6_vION4MdJqXvt46MeVgnHjuK5dTxV0mfLwQd5rKrF4nEj2R6EbcESPCAShAQq/exec"; // Replace with your Google Apps Script URL
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+      alert("Your browser does not support location access.");
+    }
+  }
+
+  function showPosition(position) {
+    document.getElementById("latitude").value = position.coords.latitude;
+    document.getElementById("longitude").value = position.coords.longitude;
+    alert("Location detected successfully!");
+  }
+
+  function showError() {
+    alert("Please allow location permission to continue.");
+  }
+
+  document.getElementById("ambulanceForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    fetch(scriptURL, {
+      method: "POST",
+      body: new FormData(ambulanceForm)
+    })
+    .then(res => alert("🚑 Ambulance request sent successfully!"))
+    .catch(err => alert("Error! Please try again."));
+  });
+</script>
+
+</body>
+</html>
